@@ -1025,6 +1025,39 @@
       line-height: 1.65;
     }
 
+    .screen-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .screen-section {
+      padding: 18px;
+    }
+
+    .screen-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 14px;
+      color: #f5f7fb;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .screen-title span {
+      color: var(--yellow);
+      font-size: 13px;
+    }
+
+    .screen-section .stage {
+      width: 100%;
+      padding: 0;
+    }
+
     @media (max-width: 1120px) {
       .deck {
         grid-template-columns: 1fr;
@@ -1097,382 +1130,264 @@
   <main class="deck">
     <aside class="toc" aria-label="页面目录">
       <p class="toc-kicker">C2C Prototype</p>
-      <h1>Binance P2P 标签与保障浮层</h1>
-      <p>把商家信任、交易保障和条款说明从隐藏徽章升级为可理解、可点击、可展开的决策信号。</p>
+      <h1>Binance P2P 标签原型</h1>
       <nav>
-        <a href="#overview"><span class="toc-num">0</span>方案总览</a>
         <a href="#list-demo"><span class="toc-num">1</span>列表页标签</a>
         <a href="#verify-demo"><span class="toc-num">2</span>认证徽章浮层</a>
         <a href="#safe-demo"><span class="toc-num">3</span>交易保障浮层</a>
-        <a href="#rules"><span class="toc-num">4</span>标签规则</a>
       </nav>
-      <div class="publish-note">评审建议：先看页面 1 的点击演示，再看页面 2/3 的展开态说明。</div>
     </aside>
 
-    <section class="deck-main">
-      <section class="hero" id="overview">
-        <div>
-          <span class="section-label">方案总览</span>
-          <h2>把“商家可信吗”变成列表页里一眼可判断的信任标签。</h2>
-          <p>P2P 买币用户在下单前最容易卡住的是安全感：商家是否经过平台认证、下单后币是否锁定、账户风险是否有保障。这个原型把原先只靠图标暗示的信任信息，拆成可点击标签和底部浮层说明。</p>
-        </div>
-        <div class="hero-summary">
-          <div class="summary-card"><strong>列表页先解决识别</strong><span>在商家名称与成单量之间露出标签，避免用户只看到价格和成单率。</span></div>
-          <div class="summary-card"><strong>浮层再解释权益</strong><span>点击后展示认证含义、下单锁币、账户保障和条款入口。</span></div>
-          <div class="summary-card"><strong>标签按商家差异化展示</strong><span>不是所有广告都挂同样标签，避免信任信号变成噪音。</span></div>
-        </div>
-      </section>
-
-      <section class="section" id="list-demo">
-        <div class="section-grid">
-          <div class="stage">
-            <section class="phone" aria-label="Binance C2C 标签交互原型">
-      <div class="status">
-        <span>16:16</span>
-        <div class="status-icons" aria-hidden="true">
-          <div class="bars"><span></span><span></span><span></span><span></span></div>
-          <div class="wifi"></div>
-          <div class="battery"></div>
-        </div>
-      </div>
-
-      <div class="filters">
-        <span class="coin"><span class="coin-mark">₮</span>USDT <i class="down"></i></span>
-        <span>金额 <i class="down"></i></span>
-        <span>支付方式 <i class="down"></i></span>
-        <span>神盾 <i class="checkbox"></i></span>
-        <span class="filter-icon" aria-hidden="true"></span>
-      </div>
-
-      <div class="list">
-        <article class="ad">
-          <div>
-            <div class="merchant-line">
-              <span class="avatar">亿</span>
-              <span class="merchant-name">亿达Pro--正经老商家--靠谱</span>
-            </div>
-            <div class="trust-tags" aria-label="商家保障标签">
-              <button class="trust-tag verify" type="button" data-sheet="verify">
-                <span class="tag-icon">✓</span>平台认证用户
-              </button>
-              <button class="trust-tag safe" type="button" data-sheet="safe">
-                <span class="tag-icon">♜</span>交易安全保证
-              </button>
-            </div>
-            <div class="orders">成单量 143 (91.70%)</div>
-            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
-            <div class="detail">
-              限额&nbsp; 180,000 - 1,354,000 CNY<br>
-              可用&nbsp; 200,000 USDT
-            </div>
-            <div class="need">▣ 需要认证</div>
-          </div>
-          <aside class="side">
-            <div class="bank">银行借记卡<span class="dot"></span></div>
-            <div class="time">◴ 15分钟</div>
-            <button class="buy" type="button">买入</button>
-          </aside>
-        </article>
-
-        <article class="ad">
-          <div>
-            <div class="merchant-line">
-              <span class="avatar">大</span>
-              <span class="merchant-name">大马-可验流水-安全老商家</span>
-            </div>
-            <div class="trust-tags" aria-label="商家保障标签">
-              <button class="trust-tag safe" type="button" data-sheet="safe">
-                <span class="tag-icon">♜</span>交易安全保证
-              </button>
-            </div>
-            <div class="orders">成单量 765 (99.80%)</div>
-            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
-            <div class="detail">
-              限额&nbsp; 150,000 - 1,195,536 CNY<br>
-              可用&nbsp; 176,593.26 USDT
-            </div>
-            <div class="need">▣ 需要认证</div>
-          </div>
-          <aside class="side">
-            <div class="bank">银行借记卡<span class="dot"></span></div>
-            <div class="time">◴ 15分钟</div>
-            <button class="buy" type="button">买入</button>
-          </aside>
-        </article>
-
-        <article class="ad">
-          <div>
-            <div class="merchant-line">
-              <span class="avatar">L</span>
-              <span class="merchant-name">Lonny-实名付7年零冻</span>
-            </div>
-            <div class="trust-tags" aria-label="商家保障标签">
-              <button class="trust-tag verify" type="button" data-sheet="verify">
-                <span class="tag-icon">✓</span>平台认证用户
-              </button>
-            </div>
-            <div class="orders">成单量 280 (100.00%)</div>
-            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
-            <div class="detail">
-              限额&nbsp; 300,000 - 902,666 CNY<br>
-              可用&nbsp; 133,333.32 USDT
-            </div>
-          </div>
-          <aside class="side">
-            <div class="bank">银行借记卡<span class="dot"></span></div>
-            <div class="time">◴ 15分钟</div>
-            <button class="buy" type="button">买入</button>
-          </aside>
-        </article>
-      </div>
-
-      <nav class="nav" aria-label="底部导航">
-        <div class="nav-item active"><span class="nav-icon"></span><span>C2C</span></div>
-        <div class="nav-item"><span class="nav-icon"></span><span>订单</span></div>
-        <div class="nav-item"><span class="nav-icon"></span><span>聊天</span></div>
-        <div class="nav-item"><span class="nav-icon"></span><span>我的</span></div>
-      </nav>
-
-      <div class="overlay" id="verifySheet" role="dialog" aria-modal="true" aria-label="用户个人资料徽章">
-        <section class="sheet">
-          <span class="sheet-handle"></span>
-          <div class="sheet-title-row">
-            <h2 class="sheet-title">用户个人资料徽章</h2>
-            <button class="close" type="button" data-close aria-label="关闭">×</button>
-          </div>
-          <a class="sheet-card" href="#bulk-advertiser">
-            <span class="mini-badge purple">✓</span>
-            <span><strong>大宗广告方</strong><span>具有较高经验并经过认证的大额交易广告方</span></span>
-            <span class="arrow">›</span>
-          </a>
-          <a class="sheet-card" href="#shield-advertiser">
-            <span class="mini-badge orange">♜</span>
-            <span><strong>神盾广告方</strong><span>对特定原因导致卖方账户（司法）冻结提供限额赔付。</span></span>
-            <span class="arrow">›</span>
-          </a>
-          <a class="view-more" href="#more-badges">查看其他</a>
-        </section>
-      </div>
-
-      <div class="overlay" id="safeSheet" role="dialog" aria-modal="true" aria-label="交易安全保证">
-        <section class="sheet safe-sheet">
-          <div class="safe-head">
-            <span class="tag-icon" style="background: #22b36f; color: #fff;">✓</span>
-            交易安全保证
-            <button class="close" type="button" data-close aria-label="关闭">×</button>
-          </div>
-          <div class="safe-content">
-            <a class="safe-link" href="#escrow-policy">
-              <span>
-                <h3>下单锁币</h3>
-                <p>下单后卖家的币进入平台托管，将在付款成功后放至您的账户内。</p>
-              </span>
-              <span class="arrow">›</span>
-            </a>
-            <a class="safe-link" href="#account-protection-policy">
-              <span>
-                <h3>账户保障</h3>
-                <p>针对特定原因导致的账户锁定，将按保障规则进行限额赔付。</p>
-              </span>
-              <span class="arrow">›</span>
-            </a>
-          </div>
-          <p class="scope-note">保障范围、赔付上限、举证材料与处理时效以具体条款为准。用户仍需使用本人实名账户付款，并遵守当地法规及支付机构规则。</p>
-        </section>
-      </div>
-            </section>
-            <p class="screen-note">点击列表中的“平台认证用户”或“交易安全保证”查看对应浮层。</p>
-          </div>
-          <div class="section-copy">
-            <span class="section-label">页面 1 / 可点击演示</span>
-            <h2>列表页：在商家名和成单量之间增加可解释标签</h2>
-            <p>标签左对齐到商家头像起点，形成清晰的“商家身份区”。商家名称旁不再重复显示钻石/盾牌，避免图标和文字标签重复。</p>
-            <ul class="point-list">
-              <li><strong>平台认证用户：</strong>解释商家经过平台资质或交易能力认证，帮助新用户理解“这个人为什么可信”。</li>
-              <li><strong>交易安全保证：</strong>解释交易托管和特定账户保障，不把安全感只藏在一个盾牌图标里。</li>
-              <li><strong>差异化展示：</strong>不同商家只展示自己具备的标签，保留标签稀缺性。</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="verify-demo">
-        <div class="section-grid">
-          <div class="stage">
-            <section class="phone" aria-label="平台认证用户浮层展开态">
-              <div class="status">
-                <span>16:46</span>
-                <div class="status-icons" aria-hidden="true">
-                  <div class="bars"><span></span><span></span><span></span><span></span></div>
-                  <div class="wifi"></div>
-                  <div class="battery"></div>
-                </div>
+    <section class="deck-main screen-gallery">
+      <section class="section screen-section" id="list-demo">
+        <h2 class="screen-title"><span>01</span>列表页标签</h2>
+        <div class="stage">
+          <section class="phone" aria-label="Binance C2C 标签交互原型">
+            <div class="status">
+              <span>16:16</span>
+              <div class="status-icons" aria-hidden="true">
+                <div class="bars"><span></span><span></span><span></span><span></span></div>
+                <div class="wifi"></div>
+                <div class="battery"></div>
               </div>
-              <div class="static-backdrop" aria-hidden="true">
-                <div class="static-title">What Is the Binance P2P Merchant VIP Program?</div>
-                <div class="static-card"></div>
-                <div class="static-card"></div>
-                <div class="static-card"></div>
-              </div>
-              <div class="overlay demo-open">
-                <section class="sheet">
-                  <span class="sheet-handle"></span>
-                  <div class="sheet-title-row">
-                    <h2 class="sheet-title">用户个人资料徽章</h2>
-                    <button class="close" type="button" aria-label="关闭">×</button>
+            </div>
+
+            <div class="filters">
+              <span class="coin"><span class="coin-mark">₮</span>USDT <i class="down"></i></span>
+              <span>金额 <i class="down"></i></span>
+              <span>支付方式 <i class="down"></i></span>
+              <span>神盾 <i class="checkbox"></i></span>
+              <span class="filter-icon" aria-hidden="true"></span>
+            </div>
+
+            <div class="list">
+              <article class="ad">
+                <div>
+                  <div class="merchant-line">
+                    <span class="avatar">亿</span>
+                    <span class="merchant-name">亿达Pro--正经老商家--靠谱</span>
                   </div>
-                  <a class="sheet-card" href="#bulk-advertiser">
-                    <span class="mini-badge purple">✓</span>
-                    <span><strong>大宗广告方</strong><span>具有较高经验并经过认证的大额交易广告方</span></span>
+                  <div class="trust-tags" aria-label="商家保障标签">
+                    <button class="trust-tag verify" type="button" data-sheet="verify">
+                      <span class="tag-icon">✓</span>平台认证用户
+                    </button>
+                    <button class="trust-tag safe" type="button" data-sheet="safe">
+                      <span class="tag-icon">♜</span>交易安全保证
+                    </button>
+                  </div>
+                  <div class="orders">成单量 143 (91.70%)</div>
+                  <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+                  <div class="detail">
+                    限额&nbsp; 180,000 - 1,354,000 CNY<br>
+                    可用&nbsp; 200,000 USDT
+                  </div>
+                  <div class="need">▣ 需要认证</div>
+                </div>
+                <aside class="side">
+                  <div class="bank">银行借记卡<span class="dot"></span></div>
+                  <div class="time">◴ 15分钟</div>
+                  <button class="buy" type="button">买入</button>
+                </aside>
+              </article>
+
+              <article class="ad">
+                <div>
+                  <div class="merchant-line">
+                    <span class="avatar">大</span>
+                    <span class="merchant-name">大马-可验流水-安全老商家</span>
+                  </div>
+                  <div class="trust-tags" aria-label="商家保障标签">
+                    <button class="trust-tag safe" type="button" data-sheet="safe">
+                      <span class="tag-icon">♜</span>交易安全保证
+                    </button>
+                  </div>
+                  <div class="orders">成单量 765 (99.80%)</div>
+                  <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+                  <div class="detail">
+                    限额&nbsp; 150,000 - 1,195,536 CNY<br>
+                    可用&nbsp; 176,593.26 USDT
+                  </div>
+                  <div class="need">▣ 需要认证</div>
+                </div>
+                <aside class="side">
+                  <div class="bank">银行借记卡<span class="dot"></span></div>
+                  <div class="time">◴ 15分钟</div>
+                  <button class="buy" type="button">买入</button>
+                </aside>
+              </article>
+
+              <article class="ad">
+                <div>
+                  <div class="merchant-line">
+                    <span class="avatar">L</span>
+                    <span class="merchant-name">Lonny-实名付7年零冻</span>
+                  </div>
+                  <div class="trust-tags" aria-label="商家保障标签">
+                    <button class="trust-tag verify" type="button" data-sheet="verify">
+                      <span class="tag-icon">✓</span>平台认证用户
+                    </button>
+                  </div>
+                  <div class="orders">成单量 280 (100.00%)</div>
+                  <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+                  <div class="detail">
+                    限额&nbsp; 300,000 - 902,666 CNY<br>
+                    可用&nbsp; 133,333.32 USDT
+                  </div>
+                </div>
+                <aside class="side">
+                  <div class="bank">银行借记卡<span class="dot"></span></div>
+                  <div class="time">◴ 15分钟</div>
+                  <button class="buy" type="button">买入</button>
+                </aside>
+              </article>
+            </div>
+
+            <nav class="nav" aria-label="底部导航">
+              <div class="nav-item active"><span class="nav-icon"></span><span>C2C</span></div>
+              <div class="nav-item"><span class="nav-icon"></span><span>订单</span></div>
+              <div class="nav-item"><span class="nav-icon"></span><span>聊天</span></div>
+              <div class="nav-item"><span class="nav-icon"></span><span>我的</span></div>
+            </nav>
+
+            <div class="overlay" id="verifySheet" role="dialog" aria-modal="true" aria-label="用户个人资料徽章">
+              <section class="sheet">
+                <span class="sheet-handle"></span>
+                <div class="sheet-title-row">
+                  <h2 class="sheet-title">用户个人资料徽章</h2>
+                  <button class="close" type="button" data-close aria-label="关闭">×</button>
+                </div>
+                <a class="sheet-card" href="#bulk-advertiser">
+                  <span class="mini-badge purple">✓</span>
+                  <span><strong>大宗广告方</strong><span>具有较高经验并经过认证的大额交易广告方</span></span>
+                  <span class="arrow">›</span>
+                </a>
+                <a class="sheet-card" href="#shield-advertiser">
+                  <span class="mini-badge orange">♜</span>
+                  <span><strong>神盾广告方</strong><span>对特定原因导致卖方账户（司法）冻结提供限额赔付。</span></span>
+                  <span class="arrow">›</span>
+                </a>
+                <a class="view-more" href="#more-badges">查看其他</a>
+              </section>
+            </div>
+
+            <div class="overlay" id="safeSheet" role="dialog" aria-modal="true" aria-label="交易安全保证">
+              <section class="sheet safe-sheet">
+                <div class="safe-head">
+                  <span class="tag-icon" style="background: #22b36f; color: #fff;">✓</span>
+                  交易安全保证
+                  <button class="close" type="button" data-close aria-label="关闭">×</button>
+                </div>
+                <div class="safe-content">
+                  <a class="safe-link" href="#escrow-policy">
+                    <span>
+                      <h3>下单锁币</h3>
+                      <p>下单后卖家的币进入平台托管，将在付款成功后放至您的账户内。</p>
+                    </span>
                     <span class="arrow">›</span>
                   </a>
-                  <a class="sheet-card" href="#shield-advertiser">
-                    <span class="mini-badge orange">♜</span>
-                    <span><strong>神盾广告方</strong><span>对特定原因导致卖方账户（司法）冻结提供限额赔付。</span></span>
+                  <a class="safe-link" href="#account-protection-policy">
+                    <span>
+                      <h3>账户保障</h3>
+                      <p>针对特定原因导致的账户锁定，将按保障规则进行限额赔付。</p>
+                    </span>
                     <span class="arrow">›</span>
                   </a>
-                  <a class="view-more" href="#more-badges">查看其他</a>
-                </section>
-              </div>
-            </section>
-          </div>
-          <div class="section-copy">
-            <span class="section-label">页面 2 / 点击平台认证用户</span>
-            <h2>认证徽章浮层：直接复用个人资料徽章说明</h2>
-            <p>这个浮层解决“平台认证用户到底认证了什么”的疑问。用户不用离开列表页，就能看到该商家背后的徽章体系，并继续进入完整徽章说明。</p>
-            <ul class="point-list">
-              <li><strong>入口：</strong>点击列表页 `平台认证用户` 标签。</li>
-              <li><strong>内容：</strong>复用个人资料徽章页面中的大宗广告方、神盾广告方等认证说明。</li>
-              <li><strong>价值：</strong>把原本隐藏在头像旁的小图标，转化成能被新手理解的认证解释。</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="safe-demo">
-        <div class="section-grid">
-          <div class="stage">
-            <section class="phone" aria-label="交易安全保证浮层展开态">
-              <div class="status">
-                <span>17:13</span>
-                <div class="status-icons" aria-hidden="true">
-                  <div class="bars"><span></span><span></span><span></span><span></span></div>
-                  <div class="wifi"></div>
-                  <div class="battery"></div>
                 </div>
-              </div>
-              <div class="static-backdrop" aria-hidden="true">
-                <div class="static-title">C2C 交易安全说明</div>
-                <div class="static-card"></div>
-                <div class="static-card"></div>
-                <div class="static-card"></div>
-              </div>
-              <div class="overlay demo-open">
-                <section class="sheet safe-sheet">
-                  <div class="safe-head">
-                    <span class="tag-icon" style="background: #22b36f; color: #fff;">✓</span>
-                    交易安全保证
-                    <button class="close" type="button" aria-label="关闭">×</button>
-                  </div>
-                  <div class="safe-content">
-                    <a class="safe-link" href="#escrow-policy">
-                      <span>
-                        <h3>下单锁币</h3>
-                        <p>下单后卖家的币进入平台托管，将在付款成功后放至您的账户内。</p>
-                      </span>
-                      <span class="arrow">›</span>
-                    </a>
-                    <a class="safe-link" href="#account-protection-policy">
-                      <span>
-                        <h3>账户保障</h3>
-                        <p>针对特定原因导致的账户锁定，将按保障规则进行限额赔付。</p>
-                      </span>
-                      <span class="arrow">›</span>
-                    </a>
-                  </div>
-                  <p class="scope-note">保障范围、赔付上限、举证材料与处理时效以具体条款为准。用户仍需使用本人实名账户付款，并遵守当地法规及支付机构规则。</p>
-                </section>
-              </div>
-            </section>
-          </div>
-          <div class="section-copy">
-            <span class="section-label">页面 3 / 点击交易安全保证</span>
-            <h2>交易保障浮层：像电商售后权益一样解释 P2P 安全机制</h2>
-            <p>用户看到“交易安全保证”后，需要知道具体保障的是哪一段流程。这里把保障拆成可点击条目，每一项都能跳到对应条款，避免只给一个笼统承诺。</p>
-            <ul class="point-list">
-              <li><strong>下单锁币：</strong>对应 P2P 托管机制，说明买家付款后卖家的币不是自由状态。</li>
-              <li><strong>账户保障：</strong>对应特定原因导致的账户锁定限额赔付，需要明确范围和赔付上限。</li>
-              <li><strong>条款入口：</strong>每个小条目可跳转到具体服务条款，让保障可追溯。</li>
-            </ul>
-          </div>
+                <p class="scope-note">保障范围、赔付上限、举证材料与处理时效以具体条款为准。用户仍需使用本人实名账户付款，并遵守当地法规及支付机构规则。</p>
+              </section>
+            </div>
+          </section>
         </div>
       </section>
 
-      <section class="section" id="rules">
-        <div class="section-copy">
-          <span class="section-label">页面 4 / 组件规则</span>
-          <h2>标签展示规则与文案边界</h2>
-          <p>标签体系最重要的是可信：不要所有商家都挂满，也不要用“绝对安全”这类会放大承诺的词。列表页负责快速识别，浮层负责解释保障范围。</p>
+      <section class="section screen-section" id="verify-demo">
+        <h2 class="screen-title"><span>02</span>平台认证用户浮层</h2>
+        <div class="stage">
+          <section class="phone" aria-label="平台认证用户浮层展开态">
+            <div class="status">
+              <span>16:46</span>
+              <div class="status-icons" aria-hidden="true">
+                <div class="bars"><span></span><span></span><span></span><span></span></div>
+                <div class="wifi"></div>
+                <div class="battery"></div>
+              </div>
+            </div>
+            <div class="static-backdrop" aria-hidden="true">
+              <div class="static-title">What Is the Binance P2P Merchant VIP Program?</div>
+              <div class="static-card"></div>
+              <div class="static-card"></div>
+              <div class="static-card"></div>
+            </div>
+            <div class="overlay demo-open">
+              <section class="sheet">
+                <span class="sheet-handle"></span>
+                <div class="sheet-title-row">
+                  <h2 class="sheet-title">用户个人资料徽章</h2>
+                  <button class="close" type="button" aria-label="关闭">×</button>
+                </div>
+                <a class="sheet-card" href="#bulk-advertiser">
+                  <span class="mini-badge purple">✓</span>
+                  <span><strong>大宗广告方</strong><span>具有较高经验并经过认证的大额交易广告方</span></span>
+                  <span class="arrow">›</span>
+                </a>
+                <a class="sheet-card" href="#shield-advertiser">
+                  <span class="mini-badge orange">♜</span>
+                  <span><strong>神盾广告方</strong><span>对特定原因导致卖方账户（司法）冻结提供限额赔付。</span></span>
+                  <span class="arrow">›</span>
+                </a>
+                <a class="view-more" href="#more-badges">查看其他</a>
+              </section>
+            </div>
+          </section>
         </div>
-        <div class="spread-grid" style="margin-top: 20px;">
-          <div class="spread-card">
-            <h3>展示位置</h3>
-            <p>商家名称下方、成单量上方；左边与头像对齐，形成一个稳定的身份区。</p>
-          </div>
-          <div class="spread-card">
-            <h3>展示数量</h3>
-            <p>单个商家建议 0-2 个主标签。认证和保障都具备时展示双标签，否则只展示具备项。</p>
-          </div>
-          <div class="spread-card">
-            <h3>点击反馈</h3>
-            <p>标签点击拉起底部浮层；浮层中每个权益条目可跳转到更详细条款。</p>
-          </div>
+      </section>
+
+      <section class="section screen-section" id="safe-demo">
+        <h2 class="screen-title"><span>03</span>交易安全保证浮层</h2>
+        <div class="stage">
+          <section class="phone" aria-label="交易安全保证浮层展开态">
+            <div class="status">
+              <span>17:13</span>
+              <div class="status-icons" aria-hidden="true">
+                <div class="bars"><span></span><span></span><span></span><span></span></div>
+                <div class="wifi"></div>
+                <div class="battery"></div>
+              </div>
+            </div>
+            <div class="static-backdrop" aria-hidden="true">
+              <div class="static-title">C2C 交易安全说明</div>
+              <div class="static-card"></div>
+              <div class="static-card"></div>
+              <div class="static-card"></div>
+            </div>
+            <div class="overlay demo-open">
+              <section class="sheet safe-sheet">
+                <div class="safe-head">
+                  <span class="tag-icon" style="background: #22b36f; color: #fff;">✓</span>
+                  交易安全保证
+                  <button class="close" type="button" aria-label="关闭">×</button>
+                </div>
+                <div class="safe-content">
+                  <a class="safe-link" href="#escrow-policy">
+                    <span>
+                      <h3>下单锁币</h3>
+                      <p>下单后卖家的币进入平台托管，将在付款成功后放至您的账户内。</p>
+                    </span>
+                    <span class="arrow">›</span>
+                  </a>
+                  <a class="safe-link" href="#account-protection-policy">
+                    <span>
+                      <h3>账户保障</h3>
+                      <p>针对特定原因导致的账户锁定，将按保障规则进行限额赔付。</p>
+                    </span>
+                    <span class="arrow">›</span>
+                  </a>
+                </div>
+                <p class="scope-note">保障范围、赔付上限、举证材料与处理时效以具体条款为准。用户仍需使用本人实名账户付款，并遵守当地法规及支付机构规则。</p>
+              </section>
+            </div>
+          </section>
         </div>
-        <div class="formula" style="margin-top: 20px;">
-          <div class="formula-row">
-            <h3>平台认证用户</h3>
-            <p>强调身份与平台审核，不承诺交易零风险。适合解释大宗广告方、Pro 广告方、神盾广告方等已有徽章。</p>
-          </div>
-          <div class="formula-row">
-            <h3>交易安全保证</h3>
-            <p>强调下单锁币、申诉支持、特定账户保障。必须同步说明保障范围、赔付上限和用户需要遵守的付款规则。</p>
-          </div>
-          <div class="formula-row">
-            <h3>不建议文案</h3>
-            <p>避免“绝对安全”“不会冻卡”“100%赔付”等不可控承诺。P2P 的平台托管可以保障币的释放流程，但无法完全控制外部银行和支付机构风控。</p>
-          </div>
-        </div>
-        <table class="spec-table" style="margin-top: 20px;">
-          <thead>
-            <tr>
-              <th>状态</th>
-              <th>列表页表现</th>
-              <th>用户获得的信息</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>双标签商家</td>
-              <td>平台认证用户 + 交易安全保证</td>
-              <td>该商家既有认证背书，也有可解释的交易保障。</td>
-            </tr>
-            <tr>
-              <td>仅认证商家</td>
-              <td>只展示平台认证用户</td>
-              <td>平台认证过商家身份/能力，但不额外展示账户保障。</td>
-            </tr>
-            <tr>
-              <td>仅保障商家</td>
-              <td>只展示交易安全保证</td>
-              <td>该广告支持托管和特定保障，但不必重复展示认证徽章。</td>
-            </tr>
-            <tr>
-              <td>普通商家</td>
-              <td>不展示主标签</td>
-              <td>保留价格、成单量、支付方式等基础信息，避免标签泛化。</td>
-            </tr>
-          </tbody>
-        </table>
       </section>
     </section>
   </main>
