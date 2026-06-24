@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Binance C2C 标签与保障浮层原型</title>
+  <style>
+    :root {
+      --bg: #111821;
+      --panel: #1b2430;
+      --panel-2: #202a36;
+      --line: #2d3947;
+      --text: #f3f6fb;
+      --muted: #8e99aa;
+      --muted-2: #bac3d2;
+      --green: #31c58a;
+      --yellow: #f0b90b;
+      --purple: #9b72ff;
+      --orange: #f2a33a;
+      --safe: #22b36f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(240, 185, 11, .08), transparent 30%),
+        #0b1017;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    .stage {
+      width: min(100vw, 460px);
+      padding: 18px 14px;
+    }
+
+    .phone {
+      position: relative;
+      width: 100%;
+      max-width: 390px;
+      height: min(844px, calc(100vh - 36px));
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 30px;
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .52);
+    }
+
+    .status {
+      height: 52px;
+      padding: 17px 18px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+    }
+
+    .bars {
+      display: grid;
+      grid-template-columns: repeat(4, 4px);
+      align-items: end;
+      gap: 3px;
+      height: 18px;
+    }
+
+    .bars span {
+      width: 4px;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .bars span:nth-child(1) { height: 7px; }
+    .bars span:nth-child(2) { height: 10px; }
+    .bars span:nth-child(3) { height: 14px; }
+    .bars span:nth-child(4) { height: 17px; }
+
+    .wifi {
+      width: 18px;
+      height: 14px;
+      border: 3px solid #fff;
+      border-color: #fff transparent transparent transparent;
+      border-radius: 50%;
+      transform: translateY(3px);
+    }
+
+    .battery {
+      width: 28px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, .86);
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .battery::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 17px;
+      height: 6px;
+      border-radius: 3px;
+      background: #fff;
+    }
+
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      top: 3px;
+      width: 3px;
+      height: 6px;
+      border-radius: 0 2px 2px 0;
+      background: rgba(255, 255, 255, .86);
+    }
+
+    .filters {
+      height: 54px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.05fr .8fr 36px;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px 8px;
+      border-bottom: 1px solid var(--line);
+      color: #d8dee8;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .coin {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .coin-mark {
+      width: 22px;
+      height: 22px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #19b9a1;
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .down {
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #c8cfda;
+      display: inline-block;
+      margin-left: 2px;
+      transform: translateY(2px);
+    }
+
+    .checkbox {
+      width: 21px;
+      height: 21px;
+      border: 2px solid #526070;
+      border-radius: 6px;
+      display: inline-block;
+      margin-left: 4px;
+      transform: translateY(5px);
+    }
+
+    .filter-icon {
+      width: 28px;
+      height: 28px;
+      justify-self: end;
+      position: relative;
+    }
+
+    .filter-icon::before {
+      content: "";
+      position: absolute;
+      inset: 4px 5px 8px;
+      border: 3px solid #e8edf5;
+      border-top-width: 4px;
+      clip-path: polygon(0 0, 100% 0, 64% 48%, 64% 100%, 36% 100%, 36% 48%);
+      border-radius: 4px;
+    }
+
+    .filter-icon::after {
+      content: "";
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    .list {
+      height: calc(100% - 166px);
+      overflow: hidden;
+    }
+
+    .ad {
+      min-height: 206px;
+      padding: 17px 13px 14px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 92px;
+      gap: 10px;
+    }
+
+    .merchant-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .avatar {
+      position: relative;
+      flex: 0 0 auto;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f0d12d;
+      color: #26313e;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2cd080;
+      border: 1px solid var(--bg);
+    }
+
+    .merchant-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 15px;
+      color: #eef3fa;
+    }
+
+    .mini-badge {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+      display: inline-grid;
+      place-items: center;
+      clip-path: polygon(50% 0, 92% 25%, 92% 75%, 50% 100%, 8% 75%, 8% 25%);
+      font-size: 10px;
+      font-weight: 900;
+      color: #111821;
+    }
+
+    .mini-badge.purple {
+      background: linear-gradient(145deg, #c6a8ff, #7b4cf4);
+    }
+
+    .mini-badge.orange {
+      background: linear-gradient(145deg, #ffc56d, #f09a23);
+    }
+
+    .trust-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 9px 0 8px;
+    }
+
+    .trust-tag {
+      border: 0;
+      appearance: none;
+      min-height: 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 9px 0 7px;
+      border-radius: 999px;
+      color: #f7f3ff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+    }
+
+    .trust-tag.verify {
+      background: linear-gradient(135deg, rgba(143, 86, 255, .34), rgba(115, 75, 212, .18));
+    }
+
+    .trust-tag.safe {
+      background: linear-gradient(135deg, rgba(242, 163, 58, .35), rgba(174, 100, 20, .16));
+      color: #fff7e7;
+    }
+
+    .tag-icon {
+      width: 15px;
+      height: 15px;
+      display: inline-grid;
+      place-items: center;
+      clip-path: polygon(50% 0, 92% 25%, 92% 75%, 50% 100%, 8% 75%, 8% 25%);
+      color: #18202b;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .verify .tag-icon {
+      background: linear-gradient(145deg, #d8c5ff, #8d5aff);
+    }
+
+    .safe .tag-icon {
+      background: linear-gradient(145deg, #ffc46c, #f1a13a);
+    }
+
+    .orders {
+      margin-left: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .price {
+      margin-top: 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+
+    .currency {
+      font-size: 18px;
+      color: #f4f6fb;
+    }
+
+    .amount {
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: #f4f6fb;
+    }
+
+    .unit {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .detail {
+      margin-top: 13px;
+      color: var(--muted-2);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .need {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      color: #e9edf4;
+      font-size: 13px;
+      border: 1px solid #596575;
+      border-radius: 3px;
+      padding: 2px 5px;
+    }
+
+    .side {
+      padding-top: 88px;
+      text-align: right;
+      color: var(--muted-2);
+      font-size: 14px;
+    }
+
+    .bank {
+      white-space: nowrap;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 3px;
+      height: 12px;
+      margin-left: 3px;
+      border-radius: 999px;
+      background: var(--yellow);
+      vertical-align: -1px;
+    }
+
+    .time {
+      margin-top: 8px;
+      color: #7f8a9b;
+      font-size: 13px;
+    }
+
+    .buy {
+      width: 72px;
+      height: 38px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--green);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: #1c2530;
+      border-top: 1px solid var(--line);
+      color: #8b96a6;
+      font-size: 12px;
+    }
+
+    .nav-item {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 4px;
+    }
+
+    .nav-item.active {
+      color: #fff;
+    }
+
+    .nav-icon {
+      width: 22px;
+      height: 22px;
+      border: 2px solid currentColor;
+      border-radius: 7px;
+    }
+
+    .nav-item:nth-child(2) .nav-icon { border-radius: 3px; }
+    .nav-item:nth-child(3) .nav-icon { border-radius: 2px; }
+    .nav-item:nth-child(4) .nav-icon { border-radius: 50%; }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      background: rgba(0, 0, 0, .58);
+      z-index: 20;
+    }
+
+    .overlay.is-open {
+      display: flex;
+    }
+
+    .sheet {
+      width: 100%;
+      max-height: 78%;
+      overflow: auto;
+      border-radius: 22px 22px 0 0;
+      background: #202936;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: 0 -20px 60px rgba(0, 0, 0, .42);
+      padding: 24px 14px 30px;
+      transform: translateY(100%);
+      animation: slideUp .22s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
+    .sheet-handle {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 42px;
+      height: 4px;
+      border-radius: 999px;
+      background: #445163;
+      transform: translateX(-50%);
+    }
+
+    .sheet-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .sheet-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .close {
+      border: 0;
+      background: transparent;
+      color: #8792a3;
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .sheet-card {
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: 36px 1fr 18px;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 13px;
+      border: 1px solid #313d4c;
+      background: rgba(17, 24, 33, .35);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sheet-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .sheet-card span {
+      display: block;
+      color: #8f9bad;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .arrow {
+      color: #6d7889;
+      font-size: 24px;
+    }
+
+    .view-more {
+      display: block;
+      margin: 20px auto 0;
+      color: var(--yellow);
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .safe-sheet {
+      background: #f8fbf8;
+      color: #1e2b25;
+      padding: 0 0 26px;
+    }
+
+    .safe-head {
+      position: relative;
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--safe);
+      background: linear-gradient(180deg, #e5f7e6, #f8fbf8);
+      border-radius: 22px 22px 0 0;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .safe-head .close {
+      position: absolute;
+      right: 14px;
+      color: #b7beb9;
+    }
+
+    .safe-content {
+      padding: 20px 22px 8px;
+    }
+
+    .safe-link {
+      display: grid;
+      grid-template-columns: 1fr 18px;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      padding: 0 0 22px;
+      margin-bottom: 2px;
+      border-bottom: 1px solid #e1e9e3;
+    }
+
+    .safe-link + .safe-link {
+      padding-top: 18px;
+    }
+
+    .safe-link h3 {
+      margin: 0 0 8px;
+      color: var(--safe);
+      font-size: 18px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .safe-link h3::before {
+      content: "·";
+      margin-right: 8px;
+    }
+
+    .safe-link p {
+      margin: 0 0 0 20px;
+      color: #6e7771;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .safe-link .arrow {
+      color: #b8c1ba;
+      align-self: center;
+      font-size: 22px;
+    }
+
+    .scope-note {
+      margin: 2px 22px 0;
+      padding: 11px 12px;
+      border-radius: 9px;
+      background: #edf4ee;
+      color: #7a857d;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .screen-note {
+      max-width: 390px;
+      margin: 12px auto 0;
+      color: #8792a3;
+      font-size: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 390px) {
+      .stage {
+        padding: 0;
+      }
+
+      .phone {
+        height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen-note {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="phone" aria-label="Binance C2C 标签交互原型">
+      <div class="status">
+        <span>16:16</span>
+        <div class="status-icons" aria-hidden="true">
+          <div class="bars"><span></span><span></span><span></span><span></span></div>
+          <div class="wifi"></div>
+          <div class="battery"></div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <span class="coin"><span class="coin-mark">₮</span>USDT <i class="down"></i></span>
+        <span>金额 <i class="down"></i></span>
+        <span>支付方式 <i class="down"></i></span>
+        <span>神盾 <i class="checkbox"></i></span>
+        <span class="filter-icon" aria-hidden="true"></span>
+      </div>
+
+      <div class="list">
+        <article class="ad">
+          <div>
+            <div class="merchant-line">
+              <span class="avatar">亿</span>
+              <span class="merchant-name">亿达Pro--正经老商家--靠谱</span>
+            </div>
+            <div class="trust-tags" aria-label="商家保障标签">
+              <button class="trust-tag verify" type="button" data-sheet="verify">
+                <span class="tag-icon">✓</span>平台认证用户
+              </button>
+              <button class="trust-tag safe" type="button" data-sheet="safe">
+                <span class="tag-icon">♜</span>交易安全保证
+              </button>
+            </div>
+            <div class="orders">成单量 143 (91.70%)</div>
+            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+            <div class="detail">
+              限额&nbsp; 180,000 - 1,354,000 CNY<br>
+              可用&nbsp; 200,000 USDT
+            </div>
+            <div class="need">▣ 需要认证</div>
+          </div>
+          <aside class="side">
+            <div class="bank">银行借记卡<span class="dot"></span></div>
+            <div class="time">◴ 15分钟</div>
+            <button class="buy" type="button">买入</button>
+          </aside>
+        </article>
+
+        <article class="ad">
+          <div>
+            <div class="merchant-line">
+              <span class="avatar">大</span>
+              <span class="merchant-name">大马-可验流水-安全老商家</span>
+            </div>
+            <div class="trust-tags" aria-label="商家保障标签">
+              <button class="trust-tag safe" type="button" data-sheet="safe">
+                <span class="tag-icon">♜</span>交易安全保证
+              </button>
+            </div>
+            <div class="orders">成单量 765 (99.80%)</div>
+            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+            <div class="detail">
+              限额&nbsp; 150,000 - 1,195,536 CNY<br>
+              可用&nbsp; 176,593.26 USDT
+            </div>
+            <div class="need">▣ 需要认证</div>
+          </div>
+          <aside class="side">
+            <div class="bank">银行借记卡<span class="dot"></span></div>
+            <div class="time">◴ 15分钟</div>
+            <button class="buy" type="button">买入</button>
+          </aside>
+        </article>
+
+        <article class="ad">
+          <div>
+            <div class="merchant-line">
+              <span class="avatar">L</span>
+              <span class="merchant-name">Lonny-实名付7年零冻</span>
+            </div>
+            <div class="trust-tags" aria-label="商家保障标签">
+              <button class="trust-tag verify" type="button" data-sheet="verify">
+                <span class="tag-icon">✓</span>平台认证用户
+              </button>
+            </div>
+            <div class="orders">成单量 280 (100.00%)</div>
+            <div class="price"><span class="currency">¥</span><span class="amount">6.77</span><span class="unit">/USDT</span></div>
+            <div class="detail">
+              限额&nbsp; 300,000 - 902,666 CNY<br>
+              可用&nbsp; 133,333.32 USDT
+            </div>
+          </div>
+          <aside class="side">
+            <div class="bank">银行借记卡<span class="dot"></span></div>
+            <div class="time">◴ 15分钟</div>
+            <button class="buy" type="button">买入</button>
+          </aside>
+        </article>
+      </div>
+
+      <nav class="nav" aria-label="底部导航">
+        <div class="nav-item active"><span class="nav-icon"></span><span>C2C</span></div>
+        <div class="nav-item"><span class="nav-icon"></span><span>订单</span></div>
+        <div class="nav-item"><span class="nav-icon"></span><span>聊天</span></div>
+        <div class="nav-item"><span class="nav-icon"></span><span>我的</span></div>
+      </nav>
+
+      <div class="overlay" id="verifySheet" role="dialog" aria-modal="true" aria-label="用户个人资料徽章">
+        <section class="sheet">
+          <span class="sheet-handle"></span>
+          <div class="sheet-title-row">
+            <h2 class="sheet-title">用户个人资料徽章</h2>
+            <button class="close" type="button" data-close aria-label="关闭">×</button>
+          </div>
+          <a class="sheet-card" href="#bulk-advertiser">
+            <span class="mini-badge purple">✓</span>
+            <span><strong>大宗广告方</strong><span>具有较高经验并经过认证的大额交易广告方</span></span>
+            <span class="arrow">›</span>
+          </a>
+          <a class="sheet-card" href="#shield-advertiser">
+            <span class="mini-badge orange">♜</span>
+            <span><strong>神盾广告方</strong><span>对特定原因导致卖方账户（司法）冻结提供限额赔付。</span></span>
+            <span class="arrow">›</span>
+          </a>
+          <a class="view-more" href="#more-badges">查看其他</a>
+        </section>
+      </div>
+
+      <div class="overlay" id="safeSheet" role="dialog" aria-modal="true" aria-label="交易安全保证">
+        <section class="sheet safe-sheet">
+          <div class="safe-head">
+            <span class="tag-icon" style="background: #22b36f; color: #fff;">✓</span>
+            交易安全保证
+            <button class="close" type="button" data-close aria-label="关闭">×</button>
+          </div>
+          <div class="safe-content">
+            <a class="safe-link" href="#escrow-policy">
+              <span>
+                <h3>下单锁币</h3>
+                <p>下单后卖家的币进入平台托管，将在付款成功后放至您的账户内。</p>
+              </span>
+              <span class="arrow">›</span>
+            </a>
+            <a class="safe-link" href="#account-protection-policy">
+              <span>
+                <h3>账户保障</h3>
+                <p>针对特定原因导致的账户锁定，将按保障规则进行限额赔付。</p>
+              </span>
+              <span class="arrow">›</span>
+            </a>
+          </div>
+          <p class="scope-note">保障范围、赔付上限、举证材料与处理时效以具体条款为准。用户仍需使用本人实名账户付款，并遵守当地法规及支付机构规则。</p>
+        </section>
+      </div>
+    </section>
+    <p class="screen-note">点击列表中的“平台认证用户”或“交易安全保证”查看对应浮层。</p>
+  </main>
+
+  <script>
+    const sheets = {
+      verify: document.querySelector("#verifySheet"),
+      safe: document.querySelector("#safeSheet")
+    };
+
+    document.querySelectorAll("[data-sheet]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const sheet = sheets[button.dataset.sheet];
+        if (sheet) sheet.classList.add("is-open");
+      });
+    });
+
+    document.querySelectorAll("[data-close]").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest(".overlay").classList.remove("is-open");
+      });
+    });
+
+    document.querySelectorAll(".overlay").forEach((overlay) => {
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) overlay.classList.remove("is-open");
+      });
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.querySelectorAll(".overlay.is-open").forEach((overlay) => {
+          overlay.classList.remove("is-open");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
